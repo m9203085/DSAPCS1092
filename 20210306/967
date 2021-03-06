@@ -1,0 +1,18 @@
+# Python Program
+from functools import reduce
+
+def allRotated(list):
+    def rotatedTo(i):
+        return [list[i]] + list[0:i] + list[i + 1:]
+    return [rotatedTo(i) for i in range(len(list))]
+   
+def perm(list):
+    if list == []:
+        return [[]]
+    else:
+        lts = allRotated(list)
+        return reduce(lambda a, b: a + b, 
+            [[[lt[0]] + pl for pl in perm(lt[1:])] for lt in lts])
+   
+for list in perm([1, 2, 3, 4]):
+    print(list)
